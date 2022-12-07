@@ -10,7 +10,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class IntakeCmd extends CommandBase {
   /** Creates a new IntakeCmd. */
   private final IntakeSubsystem intakeSub;
-  private boolean forward;
+  private boolean forward; //Sets the direction of the intake
 
   public IntakeCmd(IntakeSubsystem intakeSubsystem, boolean goFoward) {
     intakeSub = intakeSubsystem;
@@ -27,7 +27,7 @@ public class IntakeCmd extends CommandBase {
   @Override
   public void execute() {
     if(forward){
-      intakeSub.intakeBottom(-0.75);
+      intakeSub.intakeBottom(-0.75); // If it's forward, run the motor so we can intake the ball
     }else{
       intakeSub.intakeBottom(0.75); //Eject the bottom. 
     }

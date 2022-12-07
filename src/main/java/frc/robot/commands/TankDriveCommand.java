@@ -25,7 +25,7 @@ public class TankDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveSubsystem.driveTank(OI.leftStick.getY() * 0.8, OI.rightStick.getY() * 0.8);
+    driveSubsystem.driveTank(OI.leftStick.getY() * 0.8, OI.rightStick.getY() * 0.8); //Drive tank-drive style with the left and right joysticks at 80%
   }
 
   // Called once the command ends or is interrupted.

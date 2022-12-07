@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 // import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCmd;
+import frc.robot.commands.ShootCmd;
 // import frc.robot.commands.TankDriveCMD;
 import frc.robot.commands.TankDriveCommand;
 import frc.robot.subsystems.DriveSub;
 // import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -27,11 +29,13 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final IntakeSubsystem intakeSub = new IntakeSubsystem();
+  private final ShooterSubsystem shooterSub = new ShooterSubsystem();
   private final DriveSub driveSub = new DriveSub();
 
 // Intake Command - can intake and release. More consize this way. Maybe add which ones to move. 
   private final IntakeCmd intakeForward = new IntakeCmd((intakeSub), true);
   private final IntakeCmd intakeBackward = new IntakeCmd((intakeSub), false);
+  private final ShootCmd shootBalls = new ShootCmd(intakeSub, shooterSub, -0.55);
   private final TankDriveCommand tankDrive = new TankDriveCommand(driveSub);
   
 
@@ -52,7 +56,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     CommandScheduler.getInstance().setDefaultCommand(driveSub, tankDrive);
     OI.button2Aux.whileHeld(intakeBackward);
-    OI.button5Aux.whileHeld(intakeForward);    
+    OI.button5Aux.whileHeld(intakeForward);  
+    OI.triggerAux.whenPressed(shootBalls);  
   }
 
   /**
