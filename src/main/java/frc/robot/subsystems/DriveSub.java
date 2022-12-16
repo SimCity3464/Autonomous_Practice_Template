@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import com.revrobotics.*;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -23,6 +25,10 @@ public class DriveSub extends SubsystemBase {
     leftBack = new CANSparkMax(6, CANSparkMaxLowLevel.MotorType.kBrushless),
     rightBack = new CANSparkMax(8, CANSparkMaxLowLevel.MotorType.kBrushless);
   
+  private final RelativeEncoder leftFrontEncoder = leftFront.getEncoder();
+  private final RelativeEncoder rightFrontEncoder = rightFront.getEncoder();
+
+
   public DifferentialDrive drive = new DifferentialDrive(leftFront, rightFront);
 
   public DriveSub() { //In the constructor, when we create a  Drivesub object, wej'll set the left front to be inverted. 
@@ -44,7 +50,7 @@ public class DriveSub extends SubsystemBase {
   }
 
 
-  public void arcadeDrive(double speed, double rotation){
+public void arcadeDrive(double speed, double rotation){
   // Use the built-in arcade drive
   drive.arcadeDrive(speed, rotation);
   // have back motors follow the front motors. 
@@ -56,18 +62,27 @@ public void stopDrive(){
   // Stop the Arcade Drive. 
   arcadeDrive(0, 0);
 }
-public double getLeft(){
+public double getLeftSpeed(){
   // Return left encoder value. 
   return leftFront.get();
 }
-public double getRight(){
+public double getRightSpeed(){
   // Return right encoder value. 
   return rightFront.get();
 }
 
-public double getForward(){
+public double getForwardSpeed(){
   // Return the average of the two encoders
-  return ((getRight() + getLeft()) /2 );
+  return ((getLeftSpeed() + getRightSpeed()) /2 );
+}
+
+public void resetEncoders(){
+  leftFrontEncoder.setPosition(0);
+  rightFrontEncoder.setPosition(0);
+}
+
+public double getForwardDistance(){
+  return ((leftFrontEncoder.getPosition() + rightFrontEncoder.getPosition())/2);
 }
 
 public void enableMotors(boolean on){
@@ -88,10 +103,12 @@ public void enableMotors(boolean on){
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // Put appropiate values for the numbers on Smartdashboard. 
-    SmartDashboard.putNumber("Encoder Forward", getForward());
-    SmartDashboard.putNumber("Encoder Left", getLeft());
-    SmartDashboard.putNumber("Encoder Right", getRight());
+    // Put appropiate values for the numbers on Smart dashboard. 
+    SmartDashboard.putNumber("Encoder Forward Distance", getForwardDistance());
+    SmartDashboard.putNumber("Encoder Left Speed", getLeftSpeed());
+    SmartDashboard.putNumber("Encoder Right Speed", getRightSpeed());
+    SmartDashboard.putNumber("Forward Distance (Feet)", getForwardDistance() * Constants.kDriveTick2Feet);
+    
   }
 
   @Override
