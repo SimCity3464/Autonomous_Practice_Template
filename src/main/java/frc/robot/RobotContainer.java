@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.AutoMoveCmd;
 // import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCmd;
 import frc.robot.commands.ShootCmd;
@@ -17,6 +18,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -37,6 +39,7 @@ public class RobotContainer {
   private final IntakeCmd intakeBackward = new IntakeCmd((intakeSub), false);
   private final ShootCmd shootBalls = new ShootCmd(intakeSub, shooterSub, -0.55);
   private final TankDriveCommand tankDrive = new TankDriveCommand(driveSub);
+  private final AutoMoveCmd autoMoveForward = new AutoMoveCmd(driveSub, 5);
   
 
   // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -68,7 +71,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
-      new IntakeCmd((intakeSub), true)
+      new ParallelCommandGroup(new IntakeCmd((intakeSub), true), autoMoveForward),
+      new IntakeCmd(intakeSub, false)
     );
   }
 }
