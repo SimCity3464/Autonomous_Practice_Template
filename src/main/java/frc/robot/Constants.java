@@ -12,4 +12,7 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+public final class Constants {
+    public static double kDriveTick2Feet = (4 * Math.PI * 2)/12; // Should convert from encoder ticks to feet. 
+    public static double kDriveFeet2Tick = 1 / kDriveTick2Feet; // And obviously, it should be inverse for feet to ticks. 
+}
