@@ -7,7 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 // import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.MoveFwrdCmd;
+// import frc.robot.commands.MoveFwrdCmd;
+import frc.robot.commands.FwdDrivePIDCmd;
 // import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IntakeCmd;
 import frc.robot.commands.ShootCmd;
@@ -42,7 +43,7 @@ public class RobotContainer {
   private final ShootCmd shootBalls = new ShootCmd(intakeSub, shooterSub, -0.55);
   private final TankDriveCommand tankDrive = new TankDriveCommand(driveSub);
   // private final ArcadeDriveCommand arcadeDrive = new ArcadeDriveCommand(driveSub);
-  // private final MoveFwrdCmd moveFwrdCmd = new MoveFwrdCmd(driveSub, -2);
+  private final FwdDrivePIDCmd PIDForward = new FwdDrivePIDCmd(driveSub, -32);
   
 
   // private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -75,7 +76,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return new SequentialCommandGroup(
-      new ParallelRaceGroup(new IntakeCmd((intakeSub), true), new MoveFwrdCmd(driveSub, -5)),
+      new ParallelRaceGroup(new IntakeCmd((intakeSub), true), PIDForward),
       new IntakeCmd(intakeSub, false)
     );
   }
