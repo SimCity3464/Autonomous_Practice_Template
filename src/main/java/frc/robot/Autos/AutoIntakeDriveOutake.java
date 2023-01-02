@@ -5,15 +5,18 @@
 package frc.robot.Autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.FwdDrivePIDCmd;
+import frc.robot.commands.IntakeCmd;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoIntakeDriveOutake extends SequentialCommandGroup {
   /** Creates a new AutoIntakeDriveOutake. */
-  public AutoIntakeDriveOutake() {
+  public AutoIntakeDriveOutake(FwdDrivePIDCmd driveCommand, IntakeCmd intakeCommand, IntakeCmd outakeCommand, WaitCommand delayTwoSeconds) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    addCommands(driveCommand, delayTwoSeconds, outakeCommand);
   }
 }
