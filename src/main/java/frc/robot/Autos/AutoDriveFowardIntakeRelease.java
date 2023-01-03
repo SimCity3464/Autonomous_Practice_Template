@@ -7,15 +7,16 @@ package frc.robot.Autos;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.FwdDrivePIDCmd;
 import frc.robot.commands.IntakeCmd;
-import frc.robot.commands.MoveFwrdCmd;
+// import frc.robot.commands.MoveFwrdCmd;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoDriveFowardIntakeRelease extends SequentialCommandGroup {
   /** Creates a new AutoDriveFowardIntakeRelease. */
-  public AutoDriveFowardIntakeRelease(MoveFwrdCmd moveCommand, IntakeCmd intake, IntakeCmd release, WaitCommand wait) {
+  public AutoDriveFowardIntakeRelease(FwdDrivePIDCmd moveCommand, IntakeCmd intake, IntakeCmd release, WaitCommand wait) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(moveCommand, new ParallelRaceGroup(intake, wait));

@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Autos.AutoDriveFowardIntakeRelease;
 import frc.robot.commands.FwdDrivePIDCmd;
 import frc.robot.commands.IntakeCmd;
 import frc.robot.commands.ShootCmd;
@@ -15,6 +16,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,9 +35,9 @@ public class RobotContainer {
   private final IntakeCmd intakeBackward = new IntakeCmd((intakeSub), false);
   private final ShootCmd shootBalls = new ShootCmd(intakeSub, shooterSub, -0.55);
   private final TankDriveCommand tankDrive = new TankDriveCommand(driveSub);
-  private final 
-  // private final FwdDrivePIDCmd PIDForward = new FwdDrivePIDCmd(driveSub, -32);
-  // private final SequentialCommandGroup moveFowardIntakeRelease = new SequentialCommandGroup(
+  private final FwdDrivePIDCmd PIDForward = new FwdDrivePIDCmd(driveSub, -32);
+  private final AutoDriveFowardIntakeRelease autoDriveFowardIntakeRelease = new AutoDriveFowardIntakeRelease(PIDForward, intakeForward, intakeBackward, new WaitCommand(2));
+   // private final SequentialCommandGroup moveFowardIntakeRelease = new SequentialCommandGroup(
   //     new ParallelRaceGroup(new IntakeCmd((intakeSub), true), PIDForward),
   //     new IntakeCmd(intakeSub, false)
   //   );
@@ -67,6 +69,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return autoDriveFowardIntakeRelease;
   }
 }
