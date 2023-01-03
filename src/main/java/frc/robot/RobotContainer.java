@@ -16,8 +16,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+// import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
@@ -46,9 +46,9 @@ public class RobotContainer {
   // ArcadeDriveCommand(driveSub);
   private final FwdDrivePIDCmd PIDForward = new FwdDrivePIDCmd(driveSub, -32);
   private final AutoIntakeDriveOutake autoDriveFowardIntakeOutake = new AutoIntakeDriveOutake(PIDForward, intakeForward, intakeBackward, new WaitCommand(2));
-  private final SequentialCommandGroup fowardIntakeAndOutake = new SequentialCommandGroup(
-      new ParallelRaceGroup(new IntakeCmd((intakeSub), true), PIDForward),
-      new IntakeCmd(intakeSub, false));
+  //private final SequentialCommandGroup fowardIntakeAndOutake = new SequentialCommandGroup(
+      // new ParallelRaceGroup(new IntakeCmd((intakeSub), true), PIDForward),
+      // new IntakeCmd(intakeSub, false));
 
   // private final ExampleCommand m_autoCommand = new
   // ExampleCommand(m_exampleSubsystem);

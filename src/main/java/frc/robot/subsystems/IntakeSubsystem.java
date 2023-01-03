@@ -12,6 +12,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private final Spark 
     intakeBottom= new Spark(0), 
     intakeTop = new Spark(1); 
+  
 
   public IntakeSubsystem() {}
 
