@@ -15,7 +15,7 @@ public class FwdDrivePIDCmd extends CommandBase {
 
   private double setPoint; // Target distance
   private double error;
-  private final double kP = 0.015625 * 1.80; // That times 32 should give 0.5 speed. 
+  private final double kP = 0.011625 * 1.80; // That times 32 should give 0.5 speed. 
 
   private double outputSpeed; // This is the speed to run the motors. 
 
@@ -28,27 +28,33 @@ public class FwdDrivePIDCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    driveSub.resetEncoders();
+    // driveSub.resetEncoders();
+    System.out.print("Current Distance: " + (driveSub.getForwardDistance()));
+    System.out.print("Target Distance: " + setPoint);
     // setPoint += driveSub.getForwardDistance();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     forwardValue = driveSub.getForwardDistance();
     error = setPoint - forwardValue; // Negative - negative is positive
     outputSpeed = error * kP;  // Negative
+    System.out.print(outputSpeed);
     driveSub.driveTank(outputSpeed, outputSpeed); //Move both at the output speed - drive forward at said speed. 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveSub.resetEncoders(); // Don't know why I have to do it twice
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Math.abs(setPoint - driveSub.getForwardDistance()) < 6){
+    if(Math.abs(setPoint - driveSub.getForwardDistance()) < 7){
       return true;
     }else{
       return false;
