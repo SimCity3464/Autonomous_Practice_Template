@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -13,8 +15,21 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeBottom= new Spark(0), 
     intakeTop = new Spark(1); 
   
-
+  private final Relay extendableIntakeMotor = new Relay(0); //Create relay at Relay Port 0
   public IntakeSubsystem() {}
+
+
+  public void runExtendedIntakeMotor(boolean foward){
+    if (foward){
+      extendableIntakeMotor.set(Value.kForward); // If foward is true, set it to be forward
+    }else{
+      extendableIntakeMotor.set(Value.kReverse); // If not, set it to be reverse. 
+    }
+  }
+
+  public void stopIntakeMotor(){
+    extendableIntakeMotor.stopMotor(); // Stop the motor. 
+  }
 
   //turn on both bottom and top intake
   public void intakeBoth() {
