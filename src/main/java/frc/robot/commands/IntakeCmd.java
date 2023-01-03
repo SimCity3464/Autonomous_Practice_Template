@@ -28,8 +28,10 @@ public class IntakeCmd extends CommandBase {
   public void execute() {
     if(forward){
       intakeSub.intakeBottom(-0.75); // If it's forward, run the motor so we can intake the ball
+      intakeSub.runExtendedIntakeMotor(true); // Run the extended motor foward
     }else{
       intakeSub.intakeBottom(0.75); //Eject the bottom. 
+      intakeSub.runExtendedIntakeMotor(false); // Run the extended motor backwards. 
     }
   }
 
@@ -37,6 +39,7 @@ public class IntakeCmd extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     intakeSub.intakeBottom(0.00);  // Stop intake when we don't use it. 
+    intakeSub.stopIntakeMotor();
   }
 
   // Returns true when the command should end.
